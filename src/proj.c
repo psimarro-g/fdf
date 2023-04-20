@@ -6,7 +6,7 @@
 /*   By: psimarro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:05:13 by psimarro          #+#    #+#             */
-/*   Updated: 2023/04/20 09:12:28 by psimarro         ###   ########.fr       */
+/*   Updated: 2023/04/20 14:17:24 by psimarro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,14 @@ int	ft_angle(int angle)
 	return (rtn);
 }
 
+void	ft_z_angle(t_fdf *fdf)
+{
+	if (fdf->flag.z_angle > 177)
+		fdf->flag.z_angle = 177;
+	else if (fdf->flag.z_angle < 0)
+		fdf->flag.z_angle = 0;
+}
+
 t_vec2	isometric_projection(t_fdf *fdf, int x, int y, int z)
 {
 	t_vec2	rtn;
@@ -37,6 +45,7 @@ t_vec2	isometric_projection(t_fdf *fdf, int x, int y, int z)
 	double	zoom;
 
 	angle = ft_angle(fdf->flag.angle);
+	ft_z_angle(fdf);
 	if (fdf->flag.zoom < 0)
 		zoom = 1 / ((double) - (fdf->flag.zoom));
 	else
@@ -46,11 +55,11 @@ t_vec2	isometric_projection(t_fdf *fdf, int x, int y, int z)
 	x *= zoom;
 	y *= zoom;
 	z *= zoom * fdf->flag.height / 10;
-	rtn.x = sin(deg_to_rad(angle)) * sin(deg_to_rad(fdf->flag.z_angle)) * y
-		+ cos(deg_to_rad(fdf->flag.z_angle)) * x - z * cos(deg_to_rad(angle)) * sin(deg_to_rad(fdf->flag.z_angle));
-	rtn.y = -z * cos(deg_to_rad(angle * 2))
-		+ sin(deg_to_rad(angle)) * x
-		+ sin(deg_to_rad(angle)) * y;
+	rtn.x = cos(deg_to_rad(fdf->flag.z_angle)) * x
+		- sin(deg_to_rad(fdf->flag.z_angle)) * y;
+	rtn.y = sin(deg_to_rad(angle)) * sin(deg_to_rad(fdf->flag.z_angle)) * x
+		- cos(deg_to_rad(angle)) * z
+		+ sin(deg_to_rad(angle)) * cos(deg_to_rad(fdf->flag.z_angle)) * y;
 	rtn.x += (fdf->flag.pos.x * zoom) + fdf->mlx.win_size.x / 2;
 	rtn.y += (fdf->flag.pos.y * zoom) + fdf->mlx.win_size.y / 2;
 	return (rtn);
