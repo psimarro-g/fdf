@@ -6,13 +6,13 @@
 /*   By: psimarro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:18:49 by psimarro          #+#    #+#             */
-/*   Updated: 2023/04/03 20:42:07 by psimarro         ###   ########.fr       */
+/*   Updated: 2023/04/19 15:59:49 by psimarro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/fdf.h"
 
-void	get_colorcheme(t_disp *disp)
+void	get_color_theme(t_disp *disp)
 {
 	disp->colortheme = 0;
 	disp->bg_color = 0x0;

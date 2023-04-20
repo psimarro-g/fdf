@@ -6,7 +6,7 @@
 #    By: psimarro <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/30 17:45:18 by psimarro          #+#    #+#              #
-#    Updated: 2023/04/03 20:46:04 by psimarro         ###   ########.fr        #
+#    Updated: 2023/04/05 19:12:15 by psimarro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,23 +39,22 @@ OBJ = $(addprefix $(OBJ_DIR), $(SRC:%.c=%.o))
 all: $(NAME)
 
 $(OBJ_DIR)%o: $(SRC_DIR)%c
-	$(CC) $(CFLAGS) -I $(INC_DIR) -c $< -o $@
+	@$(CC) $(CFLAGS) -I $(INC_DIR) -c $< -o $@
 
 $(OBJ): | $(OBJ_DIR)
 
 $(OBJ_DIR):
-	echo $(OBJ)
-	mkdir -p $(OBJ_DIR)
+	@mkdir -p $(OBJ_DIR)
 
 $(NAME): $(OBJ)
-	ar rcs $@ $^
+	@ar rcs $@ $^
 
 .PHONY: all clean fclean re
 
 clean:
-	$(RM) -rf $(OBJ_DIR)
+	@$(RM) -rf $(OBJ_DIR)
 
 fclean: clean
-	$(RM) $(NAME)
+	@$(RM) $(NAME)
 
 re: fclean all

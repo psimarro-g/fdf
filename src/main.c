@@ -6,7 +6,7 @@
 /*   By: psimarro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 10:16:59 by psimarro          #+#    #+#             */
-/*   Updated: 2023/04/03 20:14:23 by psimarro         ###   ########.fr       */
+/*   Updated: 2023/04/20 12:19:52 by psimarro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,18 @@ void	init_fdf(t_fdf *fdf)
 {
 	fdf->mlx.win_size.x = 1200;
 	fdf->mlx.win_size.y = 800;
-	fdf->flag.height_mod = 4;
-	fdf->flag.zoom = 11;
-	fdf->flag.angle_mod = 30;
-	fdf->flag.pos.x = fdf->mlx.win_size.x / 2;
-	fdf->flag.pos.y = fdf->mlx.win_size.y / 2;
-	get_colorcheme(&fdf->disp);
+	fdf->flag.height = 3;
+	fdf->flag.zoom = 3;
+	fdf->flag.angle = 30;
+	fdf->flag.z_angle = 45;
+	fdf->flag.pos.x = 0;
+	fdf->flag.pos.y = 0;
+	get_color_theme(&fdf->disp);
+}
+
+void	show_leaks(void)
+{
+	system("leaks -q fdf");
 }
 
 int	main(const int ac, const char *av[])
@@ -43,6 +49,7 @@ int	main(const int ac, const char *av[])
 	t_fdf	fdf;
 	int		rtn;
 
+	atexit(show_leaks);
 	rtn = 1;
 	if (ac == 2)
 	{

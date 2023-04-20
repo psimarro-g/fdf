@@ -6,17 +6,14 @@
 /*   By: psimarro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 13:34:40 by psimarro          #+#    #+#             */
-/*   Updated: 2023/03/23 20:18:22 by psimarro         ###   ########.fr       */
+/*   Updated: 2023/04/20 12:26:20 by psimarro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "../mlx/mlx.h"
-#include "../inc/mlx_keycode.h"
+#include <mlx.h>
+#include "../inc/keycode.h"
 #include "../inc/fdf.h"
-
-/* comparar con version original y ver si hay que 
-proteger pantalla con funciones extra*/
 
 int	fdf_exit(t_fdf *fdf)
 {
@@ -28,7 +25,7 @@ int	fdf_exit(t_fdf *fdf)
 	exit(fdf->flag.exit_value);
 }
 
-void	add_mlx_hook(t_fdf *fdf)
+void	add_hook(t_fdf *fdf)
 {
 	mlx_key_hook(fdf->mlx.window, key_hook, fdf);
 	mlx_hook(fdf->mlx.window, KEYPRESS, 0, move_hook, fdf);
@@ -50,9 +47,7 @@ int	display_mlx_win(t_fdf *fdf)
 			{
 				fdf->mlx.buff = mlx_get_data_addr(fdf->mlx.image, \
 					&fdf->mlx.bpp, &fdf->mlx.buf_wid, &fdf->mlx.endian);
-				mlx_put_image_to_window(fdf->mlx.mlx, fdf->mlx.window,
-					fdf->mlx.image, 0, 0);
-				add_mlx_hook(fdf);
+				add_hook(fdf);
 				draw_win(fdf);
 				mlx_loop(fdf->mlx.mlx);
 				return (0);

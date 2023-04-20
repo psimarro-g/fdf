@@ -6,7 +6,7 @@
 /*   By: psimarro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 10:15:13 by psimarro          #+#    #+#             */
-/*   Updated: 2023/04/03 20:58:55 by psimarro         ###   ########.fr       */
+/*   Updated: 2023/04/19 21:35:12 by psimarro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # define DEFAULT_COLOR 0x00000000
 # define TEXT_COLOR 0xFFFFFF
-# define USAGE_COLOR 0x303030
 
 # include <stdbool.h>
 
@@ -59,12 +58,13 @@ typedef struct s_mlx
 typedef struct s_flag
 {
 	bool		disp_helper;
-	int			height_mod;
+	int			height;
 	t_vec2		pos;
 	int			zoom;
-	int			angle_mod;
+	int			angle;
 	int			exit_value;
 	int			proj;
+	int			z_angle;
 }				t_flag;
 
 typedef struct s_disp
@@ -133,7 +133,7 @@ void			fdf_swap(int *a, int *b);
 /*
 ** color
 */
-void			get_colorcheme(t_disp *disp);
+void			get_color_theme(t_disp *disp);
 int				get_t(int trgb);
 int				get_r(int trgb);
 int				get_g(int trgb);

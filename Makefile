@@ -6,23 +6,27 @@
 #    By: psimarro <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/10 18:49:00 by psimarro          #+#    #+#              #
-#    Updated: 2023/04/03 20:46:14 by psimarro         ###   ########.fr        #
+#    Updated: 2023/04/20 13:35:57 by psimarro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # **************************************************************************** #
 #                                   PROGRAM                                    #
 # **************************************************************************** #
-INC_DIR				=	includes/
-HEADER				= 	includes/fdf.h
-NAME = fdf
+
+INC_DIR	= includes/
+HEADER	= includes/fdf.h
+NAME	= fdf
 
 # **************************************************************************** #
 #                                   COMPILER                                   #
 # **************************************************************************** #
 
 CC 		= gcc
+
 CFLAGS	= -Wall -Wextra -Werror
+LDFLAGS = -framework OpenGL -framework AppKit Libft/libft.a libmlx.a
+
 RM		= rm -f
 
 # **************************************************************************** #
@@ -54,32 +58,34 @@ OBJ					= 	$(addprefix $(OBJ_DIR), $(SRC:%.c=%.o))
 #                                    RULES                                     #
 # **************************************************************************** #
 
-all:		$(NAME)
+all: $(NAME)
 
-$(OBJ_DIR)%.o:		$(SRC_DIR)%.c
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	$(CC) $(CFLAGS) -c $< -o $@ 
 
 $(OBJ): | $(OBJ_DIR)
 
 $(OBJ_DIR):
-	mkdir -p $(OBJ_DIR)
+	@mkdir -p $(OBJ_DIR)
 
-$(NAME):			Libft/libft.a $(OBJ) 
-	$(CC) $(CFLAGS) -Lmlx -lmlx -framework OpenGL -framework AppKit -o $(NAME) $(OBJ) Libft/libft.a
+$(NAME): libft $(OBJ)
+	$(CC) -o $(NAME) $(LDFLAGS) $(OBJ)
+	@echo "\n\033[32mCompiled! ᕦ(\033[31m♥\033[32m_\033[31m♥\033[32m)ᕤ\n"
 
-Libft/libft.a:
-	$(MAKE) -C Libft
-
-.PHONY:		all clean fclean re bonus
+libft:
+	@$(MAKE) -C Libft
 
 clean:
-	$(RM) -rf $(OBJ_DIR)
-	$(MAKE) -C Libft clean
+	@$(RM) -rf $(OBJ_DIR)
+	@$(MAKE) -C Libft clean
 
 fclean:				clean
-	$(RM) $(NAME)
-	$(MAKE) -C Libft fclean
+	@$(RM) $(NAME)
+	@$(MAKE) -C Libft fclean
+	@echo "\n\033[31mDeleting EVERYTHING! ⌐(ಠ۾ಠ)¬\033[37m\n"
 
 re:			fclean all
 
 bonus:		re
+
+.PHONY:		all libft clean fclean re bonus

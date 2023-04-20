@@ -6,34 +6,34 @@
 /*   By: psimarro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 09:00:23 by psimarro          #+#    #+#             */
-/*   Updated: 2023/04/02 09:41:35 by psimarro         ###   ########.fr       */
+/*   Updated: 2023/04/19 21:40:25 by psimarro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/mlx_keycode.h"
+#include "../inc/keycode.h"
 #include "../inc/fdf.h"
 
-static void	move(t_fdf *fdf, int keycode)
+static void	get_flags(t_fdf *fdf, int keycode)
 {
 	if (keycode == SP_KEY)
 		fdf->flag.disp_helper = !fdf->flag.disp_helper;
-	if (keycode == P_KEY)
+	else if (keycode == P_KEY)
 		fdf->flag.proj = !fdf->flag.proj;
-	if (keycode == PUP_KEY)
-		fdf->flag.height_mod++;
-	if (keycode == PDOWN_KEY)
-		fdf->flag.height_mod--;
-	if (keycode == NKPL_KEY)
+	else if (keycode == NKPL_KEY)
 		fdf->flag.zoom += 2;
-	if (keycode == NKMN_KEY)
+	else if (keycode == NKMN_KEY)
 		fdf->flag.zoom -= 2;
+	else if (keycode == PUP_KEY)
+		fdf->flag.height++;
+	else if (keycode == PDOWN_KEY)
+		fdf->flag.height--;
 }
 
 int	key_hook(int keycode, t_fdf *fdf)
 {
 	if (keycode == ESC_KEY)
 		fdf_exit(fdf);
-	move(fdf, keycode);
+	get_flags(fdf, keycode);
 	draw_win(fdf);
 	return (0);
 }
@@ -41,17 +41,21 @@ int	key_hook(int keycode, t_fdf *fdf)
 int	move_hook(int keycode, t_fdf *fdf)
 {
 	if (keycode == UP_KEY || keycode == W_KEY)
-		fdf->flag.pos.y -= 20;
-	if (keycode == DOWN_KEY || keycode == S_KEY)
-		fdf->flag.pos.y += 20;
-	if (keycode == LEFT_KEY || keycode == A_KEY)
-		fdf->flag.pos.x -= 20;
-	if (keycode == RIGHT_KEY || keycode == D_KEY)
-		fdf->flag.pos.x += 20;
-	if (keycode == CM_KEY || keycode == Q_KEY)
-		fdf->flag.angle_mod += 3;
-	if (keycode == PT_KEY || keycode == E_KEY)
-		fdf->flag.angle_mod -= 3;
+		fdf->flag.pos.y += 10;
+	else if (keycode == DOWN_KEY || keycode == S_KEY)
+		fdf->flag.pos.y -= 10;
+	else if (keycode == LEFT_KEY || keycode == A_KEY)
+		fdf->flag.pos.x += 10;
+	else if (keycode == RIGHT_KEY || keycode == D_KEY)
+		fdf->flag.pos.x -= 10;
+	else if (keycode == Q_KEY)
+		fdf->flag.angle += 3;
+	else if (keycode == E_KEY)
+		fdf->flag.angle -= 3;
+	else if (keycode == Z_KEY)
+		fdf->flag.z_angle += 3;
+	else if (keycode == C_KEY)
+		fdf->flag.z_angle -= 3;
 	draw_win(fdf);
 	return (0);
 }

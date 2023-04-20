@@ -6,7 +6,7 @@
 /*   By: psimarro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 10:05:13 by psimarro          #+#    #+#             */
-/*   Updated: 2023/04/03 21:36:17 by psimarro         ###   ########.fr       */
+/*   Updated: 2023/04/20 09:12:28 by psimarro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_vec2	isometric_projection(t_fdf *fdf, int x, int y, int z)
 	int		angle;
 	double	zoom;
 
-	angle = ft_angle(fdf->flag.angle_mod);
+	angle = ft_angle(fdf->flag.angle);
 	if (fdf->flag.zoom < 0)
 		zoom = 1 / ((double) - (fdf->flag.zoom));
 	else
@@ -45,14 +45,14 @@ t_vec2	isometric_projection(t_fdf *fdf, int x, int y, int z)
 	y -= fdf->map.size.y / 2;
 	x *= zoom;
 	y *= zoom;
-	z *= zoom * fdf->flag.height_mod / 10;
-	rtn.x = cos(deg_to_rad(angle)) * y
-		- cos(deg_to_rad(angle)) * x;
+	z *= zoom * fdf->flag.height / 10;
+	rtn.x = sin(deg_to_rad(angle)) * sin(deg_to_rad(fdf->flag.z_angle)) * y
+		+ cos(deg_to_rad(fdf->flag.z_angle)) * x - z * cos(deg_to_rad(angle)) * sin(deg_to_rad(fdf->flag.z_angle));
 	rtn.y = -z * cos(deg_to_rad(angle * 2))
 		+ sin(deg_to_rad(angle)) * x
 		+ sin(deg_to_rad(angle)) * y;
-	rtn.x += fdf->flag.pos.x;
-	rtn.y += fdf->flag.pos.y;
+	rtn.x += (fdf->flag.pos.x * zoom) + fdf->mlx.win_size.x / 2;
+	rtn.y += (fdf->flag.pos.y * zoom) + fdf->mlx.win_size.y / 2;
 	return (rtn);
 }
 
@@ -69,10 +69,10 @@ t_vec2	parallel_projection(t_fdf *fdf, int x, int y, int z)
 		zoom = fdf->flag.zoom;
 	x *= zoom;
 	y *= zoom;
-	z *= zoom * fdf->flag.height_mod / 15;
-	rtn.x = y + cos(deg_to_rad(fdf->flag.angle_mod)) * x;
-	rtn.y = -z + sin(deg_to_rad(fdf->flag.angle_mod)) * x;
-	rtn.x += fdf->flag.pos.x;
-	rtn.y += fdf->flag.pos.y;
+	z *= zoom * fdf->flag.height / 15;
+	rtn.x = y + cos(deg_to_rad(fdf->flag.angle)) * x;
+	rtn.y = -z + sin(deg_to_rad(fdf->flag.angle)) * x;
+	rtn.x += (fdf->flag.pos.x * zoom) + fdf->mlx.win_size.x / 2;
+	rtn.y += (fdf->flag.pos.y * zoom) + fdf->mlx.win_size.y / 2;
 	return (rtn);
 }

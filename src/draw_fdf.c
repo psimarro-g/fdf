@@ -6,7 +6,7 @@
 /*   By: psimarro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 09:52:48 by psimarro          #+#    #+#             */
-/*   Updated: 2023/04/03 21:16:53 by psimarro         ###   ########.fr       */
+/*   Updated: 2023/04/19 20:33:38 by psimarro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 static t_vec2	map_to_2d(t_fdf *fdf, int x, int y, int z)
 {
-	if (fdf->flag.proj)
-		return (parallel_projection(fdf, x, y, z));
-	return (isometric_projection(fdf, x, y, z));
+	if (!fdf->flag.proj)
+		return (isometric_projection(fdf, x, y, z));
+	return (parallel_projection(fdf, x, y, z));
 }
 
-static void	draw_between(t_fdf *fdf, t_vec2 v1, t_vec2 v2)
+static void	draw_line(t_fdf *fdf, t_vec2 v1, t_vec2 v2)
 {
 	t_pixel		p1;
 	t_pixel		p2;
@@ -58,9 +58,9 @@ void	draw_fdf(t_fdf *fdf)
 		while (j < fdf->map.size.x)
 		{
 			if (i != 0)
-				draw_between(fdf, (t_vec2){i, j}, (t_vec2){i - 1, j});
+				draw_line(fdf, (t_vec2){i, j}, (t_vec2){i - 1, j});
 			if (j != 0)
-				draw_between(fdf, (t_vec2){i, j}, (t_vec2){i, j - 1});
+				draw_line(fdf, (t_vec2){i, j}, (t_vec2){i, j - 1});
 			j++;
 		}
 		i++;

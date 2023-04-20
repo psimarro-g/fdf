@@ -6,12 +6,12 @@
 /*   By: psimarro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 09:50:00 by psimarro          #+#    #+#             */
-/*   Updated: 2023/04/03 20:43:03 by psimarro         ###   ########.fr       */
+/*   Updated: 2023/04/20 12:27:23 by psimarro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Libft/inc/libft.h"
-#include "../mlx/mlx.h"
+#include <mlx.h>
 #include "../inc/fdf.h"
 
 void	put_pixel(t_mlx *mlx, int x, int y, int color)
@@ -26,27 +26,32 @@ void	put_pixel(t_mlx *mlx, int x, int y, int color)
 	}
 }
 
-void	draw_helper(t_fdf *fdf, int col)
+void	draw_helper(t_fdf *fdf, int c)
 {
-	void	*mlx;
 	void	*win;
 	int		x;
 	int		y;
+	char	*s;
 
 	y = 20;
-	mlx = fdf->mlx.mlx;
+	s = ft_itoa(fdf->flag.z_angle);
 	win = fdf->mlx.window;
 	x = fdf->mlx.win_size.x - 270;
-	mlx_string_put(mlx, win, x - 20, y, col, "Usage");
-	mlx_string_put(mlx, win, x, y + 30, col, "Disable usage   space");
-	mlx_string_put(mlx, win, x, y + 55, col, "Move            < ^ v >");
-	mlx_string_put(mlx, win, x, y + 80, col, "Move            q w a d");
-	mlx_string_put(mlx, win, x, y + 105, col, "Zoom            + -");
-	mlx_string_put(mlx, win, x, y + 130, col, "Scale up        page up");
-	mlx_string_put(mlx, win, x, y + 155, col, "Scale down      page down");
-	mlx_string_put(mlx, win, x, y + 180, col, "Projection      p");
-	mlx_string_put(mlx, win, x, y + 205, col, "Angle           q e");
-	mlx_string_put(mlx, win, x, y + 230, col, ft_itoa(fdf->flag.angle_mod));
+	mlx_string_put(fdf->mlx.mlx, win, x - 20, y, c, "Usage");
+	mlx_string_put(fdf->mlx.mlx, win, x, y + 30, c, "Show usage    space");
+	mlx_string_put(fdf->mlx.mlx, win, x, y + 55, c, "Move          < ^ v >");
+	mlx_string_put(fdf->mlx.mlx, win, x, y + 80, c, "Move          a w s d");
+	mlx_string_put(fdf->mlx.mlx, win, x, y + 105, c, "Zoom          + -");
+	mlx_string_put(fdf->mlx.mlx, win, x, y + 130, c, "Scale up      page up");
+	mlx_string_put(fdf->mlx.mlx, win, x, y + 155, c, "Scale down    page down");
+	mlx_string_put(fdf->mlx.mlx, win, x, y + 180, c, "Projection    p");
+	mlx_string_put(fdf->mlx.mlx, win, x, y + 205, c, "Z angle       z c");
+	mlx_string_put(fdf->mlx.mlx, win, x, y + 230, c, s);
+	free(s);
+	s = ft_itoa(fdf->flag.angle);
+	mlx_string_put(fdf->mlx.mlx, win, x, y + 255, c, "Angle         q e");
+	mlx_string_put(fdf->mlx.mlx, win, x, y + 280, c, s);
+	free(s);
 }
 
 void	clear_image(t_mlx *mlx, int color)
@@ -76,7 +81,7 @@ void	draw_usage_bg(t_fdf *fdf, int color)
 	while (i < fdf->mlx.win_size.x - 10)
 	{
 		j = 15;
-		while (j < 285)
+		while (j < 325)
 		{
 			put_pixel(&fdf->mlx, i, j, color);
 			j++;
