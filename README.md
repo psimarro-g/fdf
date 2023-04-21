@@ -13,7 +13,7 @@ Each number represents a point in space:
 
 • The value corresponds to its altitude.
 
-![alt text](https://github.com/psimarro-g/fdf/blob/main/images/Screen%20Shot%202023-04-05%20at%205.03.59%20PM.png)
+![alt text](https://github.com/psimarro-g/fdf/blob/main/images/array.png)
 
 Executing the program as:
 ```console
@@ -23,4 +23,4 @@ $>
 
 using the example file shown above (42.fdf) should render a landscape similar to:
 
-![alt text](https://github.com/psimarro-g/fdf/blob/main/images/Screen%20Shot%202023-04-05%20at%205.15.31%20PM.png)
+![alt text](https://github.com/psimarro-g/fdf/blob/main/images/grid.png)
