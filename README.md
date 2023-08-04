@@ -1,6 +1,27 @@
-# fdf
+<h1 align="center">
+	FDF
+</h1>
+<h2 align="center">
+	<b><i>Computer graphics project</i></b><br>
+</h2>
+
+<p align="center">
+	<img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/psimarro-g/push_swap?color=lightblue" />
+	<img alt="Code language count" src="https://img.shields.io/github/languages/count/psimarro-g/push_swap?color=yellow" />
+	<img alt="GitHub top language" src="https://img.shields.io/github/languages/top/psimarro-g/push_swap?color=blue" />
+	<img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/psimarro-g/push_swap?color=green" />
+</p>
+
+<p align="center">
+	Mac OS X 10.15.7 (Darwin Kernel Version 19.6.0)<br>
+</p>
+
+<br>
+
 FDF is short for ’fil de fer’ in French which means ’wireframe model’.
 This project is about creating a simple wireframe model representation of a 3D landscape by linking various points (x, y, z) thanks to line segments (edges).
+
+The program uses a simple graphic library developped in 42 école to manage windows, images and events called minilibx.
 
 The coordinates of the landscape are stored in a .fdf file passed as a parameter to
 the program.
@@ -12,8 +33,9 @@ Each number represents a point in space:
 • The vertical position corresponds to its ordinate.
 
 • The value corresponds to its altitude.
-
-![alt text](https://github.com/psimarro-g/fdf/blob/main/images/array.png)
+<p align="center">
+<img src="https://github.com/psimarro-g/fdf/blob/main/images/array.png">
+</p>
 
 Executing the program as:
 ```console
@@ -21,6 +43,17 @@ $>./fdf 42.fdf
 $>
 ```
 
-using the example file shown above (42.fdf) should render a landscape similar to:
+and using the example file shown above (42.fdf) should render a landscape similar to:
 
-![alt text](https://github.com/psimarro-g/fdf/blob/main/images/grid.png)
+<p align="center">
+<img src="https://github.com/psimarro-g/fdf/blob/main/images/grid.png">
+</p>
+
+The z value or altitude stored in the grid can also contain a hex colour for that point separated by a comma (1,0xff). The parser that reads the maps stores this value and defaults to a specified colour when absent. It also checks for any errors in the format.
+
+When tracing lines between points with different colours the line algorithm gradually blends them.
+
+The map representation can be transformed in real time (rotation, translation, zoom) and offers both parallel and isometric views of the map.
+
+Anti aliasing in the line segments that connect the grid dots was mitigated by imlplementing [Wu's line algorithm](https://en.wikipedia.org/wiki/Xiaolin_Wu%27s_line_algorithm).
+
