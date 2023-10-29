@@ -48,13 +48,17 @@ and using the example file shown above "42.fdf" should render a landscape simila
 <img src="https://github.com/psimarro-g/fdf/blob/main/images/grid.png">
 </p>
 
-## Additional fetures
+## Additional features
 
 The z value or altitude stored in the grid can also contain a hex colour for that point separated by a comma (1,0xff). The parser that reads the maps stores this value and defaults to a specified colour when absent. It also checks for any errors in the format.
 
-When tracing lines between points with different colours the line algorithm gradually blends them.
+When tracing lines between points with different colours the implemented  line algorithm gradually blends them.
 
 The map representation can be transformed in real time with rotation, translation, zoom (always centered on the viewing point) and offers both parallel and isometric views of the map in a builtin menu.
 
 Anti aliasing in the line segments that connect the grid dots was mitigated by imlplementing [Wu's line algorithm](https://en.wikipedia.org/wiki/Xiaolin_Wu%27s_line_algorithm).
 
+<br>
+<p align="center">
+<img src="https://github.com/psimarro-g/fdf/blob/main/images/Screen Shot 2023-10-29 at 9.09.51 PM.png">
+</p>
